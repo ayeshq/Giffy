@@ -5,6 +5,9 @@ plugins {
     kotlin("kapt")
 }
 
+val config = { key: String -> "\"${project.properties[key]}\"" }
+val giffyApiKey = config("com.giffy.api_key")
+
 android {
     namespace = "com.giffy"
     compileSdk = 34
@@ -20,8 +23,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+
+            buildConfigField("String", "GIFFY_API_KEY", giffyApiKey)
+        }
+
         release {
             isMinifyEnabled = false
+
+            buildConfigField("String", "GIFFY_API_KEY", giffyApiKey)
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -38,6 +50,7 @@ android {
     dataBinding {
         enable = true
     }
+    buildFeatures.buildConfig = true
 }
 
 dependencies {
@@ -69,7 +82,7 @@ dependencies {
 
     //Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 
     //Glide
     implementation("com.github.bumptech.glide:glide:4.15.1")
