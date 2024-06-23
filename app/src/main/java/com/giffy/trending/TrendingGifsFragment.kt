@@ -48,7 +48,7 @@ class TrendingGifsFragment : Fragment(R.layout.fragment_trending_gifs) {
     }
 
     private fun prepareTrendingGifsList() {
-        with(binding.trendingGifsList) {
+        with(binding.trendingGifsLayout.trendingGifsList) {
 
             adapter = trendingGifsAdapter
 

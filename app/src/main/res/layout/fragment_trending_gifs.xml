@@ -4,7 +4,6 @@
 
     <data>
         <import type="com.giffy.trending.TrendingGifsViewModel"/>
-        <import type="com.giffy.trending.TrendingGifsViewModel.State"/>
 
         <variable
             name="trendingGifsViewModel"
@@ -45,36 +44,11 @@
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/trendingGifsList"
+        <include
+            android:id="@+id/trendingGifsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            visibleGone="@{trendingGifsViewModel.state == TrendingGifsViewModel.State.Preview}" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            visibleGone="@{trendingGifsViewModel.state == TrendingGifsViewModel.State.Loading}"/>
-
-        <TextView
-            android:id="@+id/emptyStateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/md_theme_light_error"
-            android:text="@string/no_trending_gifs"
-            visibleGone="@{trendingGifsViewModel.State == TrendingGifsViewModel.State.Empty}"/>
-
-        <TextView
-            android:id="@+id/errorStateTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/md_theme_light_error"
-            android:text="@string/something_went_wrong"
-            visibleGone="@{trendingGifsViewModel.State == TrendingGifsViewModel.State.Error}"/>
+            layout="@layout/layout_trending_gifs"
+            app:trendingGifsViewModel="@{trendingGifsViewModel}"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
