@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Giffy</string>
+
+    <string name="rating_g">G</string>
+    <string name="rating_pg">PG</string>
+    <string name="rating_pg_13">PG\n13</string>
+    <string name="rating_r">R</string>
 </resources>

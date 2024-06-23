@@ -61,4 +61,10 @@
     <color name="md_theme_dark_surfaceTint">#FFB4AB</color>
     <color name="md_theme_dark_outlineVariant">#534341</color>
     <color name="md_theme_dark_scrim">#000000</color>
+
+
+    <color name="rating_g">#74F8A4</color>
+    <color name="rating_pg">#59C8FA</color>
+    <color name="rating_pg_13">#FFA63A</color>
+    <color name="rating_r">#FF2525</color>
 </resources>
