@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.giffy.random.RandomGifViewModel" />
+        <import type="com.giffy.random.RandomGifViewModel.State" />
+
+        <variable
+            name="viewModel"
+            type="RandomGifViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/randomGifProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            visibleGone="@{viewModel.state == State.Loading}" />
+
+        <TextView
+            android:id="@+id/randomGifErrorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/something_went_wrong"
+            android:textColor="@color/md_theme_light_error"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            visibleGone="@{viewModel.state == State.Error}" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/retryRandomGif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/retry_24"
+            android:tint="@color/md_theme_light_error"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:layout_constraintTop_toBottomOf="@+id/randomGifErrorText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            visibleGone="@{viewModel.state == State.Error}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/randomGif"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            visibleGone="@{viewModel.state == State.Preview}"
+            gif="@{viewModel.randomGif}"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

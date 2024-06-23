@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="com.giffy.trending.TrendingGifsViewModel"/>
@@ -25,15 +26,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="330dp"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-                app:titleEnabled="false"
-                android:background="@android:color/darker_gray">
+                app:titleEnabled="false">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/randomGif"
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/randomGifFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:name="com.giffy.random.RandomGifFragment"
                     app:layout_collapseMode="parallax"
-                    app:layout_scrollFlags="scroll|enterAlways" />
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    tools:layout="@layout/fragment_random_gif" />
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/toolbar"
