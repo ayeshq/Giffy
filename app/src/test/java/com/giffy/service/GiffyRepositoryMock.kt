@@ -17,8 +17,10 @@ class GiffyRepositoryMock : GiffyRepository {
     //A predefined sample gif parsed from a json file containing a random giffy api response
     private val gifStub: Gif = gifStub()
 
-    override suspend fun randomGif(): Flow<Gif?> {
-        TODO("Not yet implemented")
+    override suspend fun randomGif(): Flow<Gif?> = if (error) {
+        throw Exception("Some random error!")
+    } else {
+        flowOf(gifStub)
     }
 
     override suspend fun trendingGifs(): Flow<List<Gif>?> = if (error) {
@@ -29,8 +31,12 @@ class GiffyRepositoryMock : GiffyRepository {
         flowOf(listOf(gifStub))
     }
 
-    override suspend fun searchGif(query: String): Flow<List<Gif>?> {
-        TODO("Not yet implemented")
+    override suspend fun searchGif(query: String): Flow<List<Gif>?> = if (error) {
+        throw Exception("Some random error!")
+    } else if (empty) {
+        flowOf(listOf())
+    } else {
+        flowOf(listOf(gifStub))
     }
 
     /**
