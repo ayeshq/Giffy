@@ -26,8 +26,8 @@ class GiffyRepositoryImpl @Inject constructor(
         return flowOf(gif)
     }
 
-    override suspend fun trendingGifs(query: String): Flow<List<Gif>?> {
-        val trendingGifs = giffyService.trendingGifs(query).body()?.data
+    override suspend fun trendingGifs(): Flow<List<Gif>?> {
+        val trendingGifs = giffyService.trendingGifs().body()?.data
         return flowOf(trendingGifs)
     }
 
@@ -71,7 +71,7 @@ class GiffyRepositoryImpl @Inject constructor(
         }
     }
 
-    interface GiffyService {
+    private interface GiffyService {
 
         @GET("v1/gifs/random")
         suspend fun randomGif(): Response<GiffyResponse<Gif>>
@@ -89,7 +89,6 @@ class GiffyRepositoryImpl @Inject constructor(
 
         @GET("v1/gifs/trending")
         suspend fun trendingGifs(
-            @Query("q") q: String,
             @Query("limit") limit: Int = 50
         ): Response<GiffyResponse<List<Gif>>>
     }

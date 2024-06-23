@@ -5,4 +5,6 @@
     <string name="rating_pg">PG</string>
     <string name="rating_pg_13">PG\n13</string>
     <string name="rating_r">R</string>
+    <string name="no_trending_gifs">No Trending Gifs!</string>
+    <string name="something_went_wrong">Something went wrong!</string>
 </resources>
