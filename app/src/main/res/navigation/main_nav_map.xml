@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/gifsListFragment"
-        android:name="com.giffy.GifsListFragment"
+        android:name="com.giffy.list.GifsListFragment"
         tools:layout="@layout/fragment_gifs_list"/>
 
 </navigation>
