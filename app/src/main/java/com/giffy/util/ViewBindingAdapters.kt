@@ -2,12 +2,16 @@ package com.giffy.util
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.giffy.model.Gif
+import com.giffy.model.GifRating
+import com.google.android.material.shape.MaterialShapeDrawable
 
 object ViewBindingAdapters {
 
@@ -74,6 +78,17 @@ object ViewBindingAdapters {
                 .load(gif.originalGif.url)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("gifRating")
+    fun bindRating(textView: TextView, rating: GifRating?) {
+        rating?.apply {
+            textView.setText(title)
+            if (textView.background is MaterialShapeDrawable) {
+                (textView.background as MaterialShapeDrawable).fillColor = ContextCompat.getColorStateList(textView.context, color)
+            }
         }
     }
 }
