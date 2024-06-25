@@ -57,6 +57,7 @@
             android:id="@+id/randomGif"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:scaleType="centerCrop"
             visibleGone="@{viewModel.state == State.Preview}"
             gif="@{viewModel.randomGif}"/>
 

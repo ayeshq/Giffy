@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.giffy.R
 import com.giffy.databinding.FragmentRandomGifBinding
+import com.giffy.model.Gif
 import com.giffy.util.asAgeRestrictionBadge
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +19,8 @@ class RandomGifFragment : Fragment() {
     private lateinit var binding: FragmentRandomGifBinding
 
     private val viewModel: RandomGifViewModel by viewModels<RandomGifViewModel>()
+
+    private var gifClickListener: ((gif: Gif) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +53,12 @@ class RandomGifFragment : Fragment() {
         binding
             .ageBadgeText
             .asAgeRestrictionBadge()
+
+        binding
+            .randomGif
+            .setOnClickListener {
+                gifClickListener?.invoke(viewModel.randomGif.value!!)
+            }
     }
 
     override fun onResume() {
@@ -62,5 +71,9 @@ class RandomGifFragment : Fragment() {
         super.onPause()
 
         viewModel.stopAutoLoadingRandomGifs()
+    }
+
+    fun setOnGifCLickedListener(listener: (gif: Gif) -> Unit) {
+        gifClickListener = listener
     }
 }

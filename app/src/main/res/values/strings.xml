@@ -7,4 +7,6 @@
     <string name="rating_r">R</string>
     <string name="no_trending_gifs">No Trending Gifs!</string>
     <string name="something_went_wrong">Something went wrong!</string>
+    <string name="searchbar_hint">Search for any gif</string>
+    <string name="nothing_found">Nothing Found!</string>
 </resources>
