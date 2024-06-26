@@ -36,12 +36,20 @@ class RandomGifViewModel @Inject constructor(
     }
 
     fun startAutoLoadingRandomGifs() {
-        stopAutoLoadingRandomGifs()
+        if (randomGifLoadingJob != null && randomGifLoadingJob!!.isActive) {
+            return
+        }
 
         randomGifLoadingJob = viewModelScope.launch(gifLoadingErrorHandler) {
             while (true) {
-                loadRandomGif()
-                delay(REFRESH_INTERVAL_MILLIS)
+                //If no random gif was fetched yet, fetch the first gif immediately with no delays
+                if (_randomGif.value == null) {
+                    loadRandomGif()
+                    delay(REFRESH_INTERVAL_MILLIS)
+                } else {
+                    delay(REFRESH_INTERVAL_MILLIS)
+                    loadRandomGif()
+                }
             }
         }
     }
