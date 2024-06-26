@@ -67,4 +67,18 @@ class SearchViewModelTest {
         val state = viewModel.state.getOrAwaitValueTest()
         assertThat(state).isEqualTo(SearchViewModel.State.Preview)
     }
+
+    @Test
+    fun `clearing the search results after non-empty search results will change the state to NoSearch`() {
+        repo.empty = false //Load real results to change the state to preview first
+        repo.error = false
+
+        viewModel.searchGifs("Something")
+        var state = viewModel.state.getOrAwaitValueTest()
+        assertThat(state).isEqualTo(SearchViewModel.State.Preview)
+
+        viewModel.clearSearchResults()
+        state = viewModel.state.getOrAwaitValueTest()
+        assertThat(state).isEqualTo(SearchViewModel.State.NoSearch)
+    }
 }
