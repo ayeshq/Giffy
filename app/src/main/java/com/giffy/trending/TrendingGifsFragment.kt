@@ -103,6 +103,24 @@ class TrendingGifsFragment : Fragment() {
         prepareTrendingGifs()
         prepareSearch()
         prepareRandomGifFragment()
+
+        searchViewModel
+            .state
+            .observe(viewLifecycleOwner) { searchState ->
+                searchState?.let {
+                    val randomGifFragment = childFragmentManager.findFragmentById(R.id.randomGifFragment) as RandomGifFragment
+                    when (it) {
+                        SearchViewModel.State.Error,
+                        SearchViewModel.State.Preview,
+                        SearchViewModel.State.Empty -> {
+                            randomGifFragment.stopAutoLoadingRandomGifs()
+                        }
+                        SearchViewModel.State.NoSearch -> {
+                            randomGifFragment.startAutoLoadingRandomGifs()
+                        }
+                    }
+                }
+            }
     }
 
     private fun prepareRandomGifFragment() {

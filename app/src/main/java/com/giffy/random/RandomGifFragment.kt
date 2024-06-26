@@ -76,4 +76,12 @@ class RandomGifFragment : Fragment() {
     fun setOnGifCLickedListener(listener: (gif: Gif) -> Unit) {
         gifClickListener = listener
     }
+
+    fun startAutoLoadingRandomGifs() {
+        viewModel.startAutoLoadingRandomGifs()
+    }
+
+    fun stopAutoLoadingRandomGifs() {
+        viewModel.stopAutoLoadingRandomGifs()
+    }
 }
