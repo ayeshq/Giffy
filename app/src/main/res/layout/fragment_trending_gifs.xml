@@ -46,10 +46,15 @@
                     android:id="@+id/search_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
                     android:hint="@string/searchbar_hint"
                     app:layout_collapseMode="pin"
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:backgroundTint="@color/searchbar_theme_tint"/>
+
+                <!-- Translucent status bar flag moves the search bar up in a wrong way!-->
+                <!-- android:fitsSystemWindows="true" should fix it, but it's not working, ref: https://github.com/material-components/material-components-android/blob/master/docs/components/Search.md#translucent-status-bar -->
+                <!-- TODO fix fitsSystemWindows and remove topMargin attribute -->
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
