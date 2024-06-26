@@ -44,6 +44,7 @@ class RandomGifViewModel @Inject constructor(
             while (true) {
                 //If no random gif was fetched yet, fetch the first gif immediately with no delays
                 if (_randomGif.value == null) {
+                    updateState(State.Loading)
                     loadRandomGif()
                     delay(REFRESH_INTERVAL_MILLIS)
                 } else {
@@ -65,7 +66,6 @@ class RandomGifViewModel @Inject constructor(
     @VisibleForTesting
     fun loadRandomGif() {
         viewModelScope.launch(gifLoadingErrorHandler) {
-            updateState(State.Loading)
 
             giffyRepository.randomGif().collect { gif: Gif? ->
                 if (gif == null) {
