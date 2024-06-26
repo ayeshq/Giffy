@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -43,6 +45,19 @@ fun EditText.onImeActionSearch(): Flow<CharSequence?> {
         }
         setOnEditorActionListener(listener)
         awaitClose { setOnEditorActionListener(null) }
+    }
+}
+
+/**
+ * Creates a flow that emits the search query text when clicking on the retry button
+ */
+fun View.retrySearch(searchEditText: EditText): Flow<CharSequence?> {
+    return callbackFlow {
+        setOnClickListener {
+            it.hideKeyboard()
+            trySend(searchEditText.text)
+        }
+        awaitClose { setOnClickListener(null) }
     }
 }
 

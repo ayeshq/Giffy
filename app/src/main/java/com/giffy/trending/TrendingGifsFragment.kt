@@ -22,6 +22,7 @@ import com.giffy.random.RandomGifFragment
 import com.giffy.search.SearchViewModel
 import com.giffy.util.hideKeyboard
 import com.giffy.util.onImeActionSearch
+import com.giffy.util.retrySearch
 import com.giffy.util.textChanges
 import com.google.android.material.search.SearchView
 import dagger.hilt.android.AndroidEntryPoint
@@ -179,18 +180,12 @@ class TrendingGifsFragment : Fragment() {
             }
 
         //Retry search button
-        binding
+        val retrySearchFlow = binding
             .searchLayout
             .retrySearch
-            .setOnClickListener {
-                searchGif(
-                    binding
-                        .searchLayout
-                        .searchView
-                        .editText
-                        .text
-                )
-            }
+            .retrySearch(binding.searchLayout.searchView.editText)
+
+        prepareSearchQueryFlow(retrySearchFlow)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -214,7 +209,7 @@ class TrendingGifsFragment : Fragment() {
             .launchIn(lifecycleScope)
     }
 
-    private fun searchGif(q: CharSequence?) {
+    private fun searchGif(q: CharSequence) {
         searchViewModel.searchGifs(q.toString())
     }
 
