@@ -31,37 +31,6 @@ fun TextView.asAgeRestrictionBadge() {
 }
 
 /**
- * Creates a flow that emits the value of the ime action search event
- */
-fun EditText.onImeActionSearch(): Flow<CharSequence?> {
-    return callbackFlow {
-        val listener = TextView.OnEditorActionListener { v, actionId, _ ->
-            if (EditorInfo.IME_ACTION_SEARCH == actionId) {
-                hideKeyboard()
-                trySend(v.text)
-                return@OnEditorActionListener true
-            }
-            return@OnEditorActionListener false
-        }
-        setOnEditorActionListener(listener)
-        awaitClose { setOnEditorActionListener(null) }
-    }
-}
-
-/**
- * Creates a flow that emits the search query text when clicking on the retry button
- */
-fun View.retrySearch(searchEditText: EditText): Flow<CharSequence?> {
-    return callbackFlow {
-        setOnClickListener {
-            it.hideKeyboard()
-            trySend(searchEditText.text)
-        }
-        awaitClose { setOnClickListener(null) }
-    }
-}
-
-/**
  * Creates a flow that emits the value of the changed text event
  */
 fun EditText.textChanges(): Flow<CharSequence?> {

@@ -6,6 +6,9 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -21,14 +24,14 @@ import com.giffy.model.Gif
 import com.giffy.random.RandomGifFragment
 import com.giffy.search.SearchViewModel
 import com.giffy.util.hideKeyboard
-import com.giffy.util.onImeActionSearch
-import com.giffy.util.retrySearch
 import com.giffy.util.textChanges
 import com.google.android.material.search.SearchView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
@@ -282,5 +285,36 @@ class TrendingGifsFragment : Fragment() {
             val itemSize = remainingHorizontalSpacing / GIF_GRID_ADAPTER_SPAN_COUNT
             return itemSize
         }
+    }
+}
+
+/**
+ * Creates a flow that emits the value of the ime action search event
+ */
+private fun EditText.onImeActionSearch(): Flow<CharSequence?> {
+    return callbackFlow {
+        val listener = TextView.OnEditorActionListener { v, actionId, _ ->
+            if (EditorInfo.IME_ACTION_SEARCH == actionId) {
+                hideKeyboard()
+                trySend(v.text)
+                return@OnEditorActionListener true
+            }
+            return@OnEditorActionListener false
+        }
+        setOnEditorActionListener(listener)
+        awaitClose { setOnEditorActionListener(null) }
+    }
+}
+
+/**
+ * Creates a flow that emits the search query text when clicking on the retry button
+ */
+private fun View.retrySearch(searchEditText: EditText): Flow<CharSequence?> {
+    return callbackFlow {
+        setOnClickListener {
+            it.hideKeyboard()
+            trySend(searchEditText.text)
+        }
+        awaitClose { setOnClickListener(null) }
     }
 }
