@@ -2,14 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <import type="com.giffy.model.Gif"/>
-
-        <variable
-            name="gif"
-            type="Gif" />
-    </data>
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/gifCard"
         android:layout_width="100dp"
@@ -21,7 +13,6 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            fixedThumb="@{gif}"/>
+            android:layout_height="match_parent" />
     </com.google.android.material.card.MaterialCardView>
 </layout>
