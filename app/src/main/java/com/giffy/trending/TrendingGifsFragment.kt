@@ -14,10 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.giffy.R
 import com.giffy.databinding.FragmentTrendingGifsBinding
+import com.giffy.details.GifDetailsFragment
 import com.giffy.list.GifsAdapter
 import com.giffy.list.GifsGridSpacingItemDecoration
 import com.giffy.model.Gif
@@ -49,8 +51,10 @@ class TrendingGifsFragment : Fragment() {
     private val trendingGifsViewModel by viewModels<TrendingGifsViewModel>()
     private val searchViewModel by viewModels<SearchViewModel>()
 
-    private val onGifClickedListener: (gif: Gif) -> Unit = {
-        //For later
+    private val onGifClickedListener: (gif: Gif) -> Unit = { clickedGif: Gif ->
+        val bundle = Bundle()
+        bundle.putString(GifDetailsFragment.EXTRA_GIF_ID, clickedGif.id)
+        findNavController().navigate(R.id.showGifDetails, bundle, null)
     }
 
     private val trendingGifsAdapter = GifsAdapter(onGifClickedListener)
@@ -105,13 +109,14 @@ class TrendingGifsFragment : Fragment() {
 
         prepareTrendingGifs()
         prepareSearch()
-        prepareRandomGifFragment()
+
+        val randomGifFragment = childFragmentManager.findFragmentById(R.id.randomGifFragment) as RandomGifFragment
+        randomGifFragment.setOnGifCLickedListener(onGifClickedListener)
 
         searchViewModel
             .state
             .observe(viewLifecycleOwner) { searchState ->
                 searchState?.let {
-                    val randomGifFragment = childFragmentManager.findFragmentById(R.id.randomGifFragment) as RandomGifFragment
                     when (it) {
                         SearchViewModel.State.Error,
                         SearchViewModel.State.Preview,
@@ -126,11 +131,6 @@ class TrendingGifsFragment : Fragment() {
             }
     }
 
-    private fun prepareRandomGifFragment() {
-        val randomGifFragment = childFragmentManager.findFragmentById(R.id.randomGifFragment) as RandomGifFragment
-        randomGifFragment.setOnGifCLickedListener(onGifClickedListener)
-    }
-
     private fun prepareTrendingGifs() {
         prepareGifsList(binding.trendingGifsLayout.trendingGifsList, trendingGifsAdapter)
         trendingGifsViewModel
@@ -139,7 +139,7 @@ class TrendingGifsFragment : Fragment() {
                 trendingGifsAdapter.submitList(trendingGifsList)
             }
 
-        trendingGifsViewModel.loadTrendingGifs()
+//        trendingGifsViewModel.loadTrendingGifs()
     }
 
     @OptIn(FlowPreview::class)
@@ -153,13 +153,13 @@ class TrendingGifsFragment : Fragment() {
             .apply {
                 // Add ime search action listener
                 val searchQueryFlow = onImeActionSearch()
-                prepareSearchQueryFlow(searchQueryFlow)
+                launchSearchQueryFlow(searchQueryFlow)
             }.apply {
                 // Add Text changed listener
                 val searchQueryFlow = textChanges()
                                 // Don't call the search api on every key pressed
                                 .debounce(300)
-                prepareSearchQueryFlow(searchQueryFlow)
+                launchSearchQueryFlow(searchQueryFlow)
             }
 
         //Hide the keyboard once the user starts scrolling the search result
@@ -206,11 +206,11 @@ class TrendingGifsFragment : Fragment() {
             .retrySearch
             .retrySearch(binding.searchLayout.searchView.editText)
 
-        prepareSearchQueryFlow(retrySearchFlow)
+        launchSearchQueryFlow(retrySearchFlow)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private fun prepareSearchQueryFlow(queryFlow: Flow<CharSequence?>) {
+    private fun launchSearchQueryFlow(queryFlow: Flow<CharSequence?>) {
         queryFlow
             .filterNotNull()
             .filterNot { query ->

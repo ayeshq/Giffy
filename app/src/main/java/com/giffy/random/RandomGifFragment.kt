@@ -56,6 +56,7 @@ class RandomGifFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding
+            .gifDetails
             .ageBadgeText
             .asAgeRestrictionBadge()
 

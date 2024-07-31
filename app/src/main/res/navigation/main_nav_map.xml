@@ -3,11 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_map"
-    app:startDestination="@+id/gifsListFragment">
+    app:startDestination="@+id/trendingGifsFragment">
 
     <fragment
-        android:id="@+id/gifsListFragment"
+        android:id="@+id/trendingGifsFragment"
         android:name="com.giffy.trending.TrendingGifsFragment"
-        tools:layout="@layout/fragment_trending_gifs"/>
+        tools:layout="@layout/fragment_trending_gifs">
 
+        <action
+            android:id="@+id/showGifDetails"
+            app:destination="@id/gifDetailsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/gifDetailsFragment"
+        android:name="com.giffy.details.GifDetailsFragment"
+        tools:layout="@layout/fragment_gif_details">
+
+        <argument
+            android:name="GIF_ID_ARG"
+            app:argType="string"
+            app:nullable="false"/>
+    </fragment>
 </navigation>

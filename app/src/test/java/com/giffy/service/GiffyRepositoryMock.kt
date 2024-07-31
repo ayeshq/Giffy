@@ -39,6 +39,12 @@ class GiffyRepositoryMock : GiffyRepository {
         flowOf(listOf(gifStub))
     }
 
+    override suspend fun gifById(id: String): Flow<Gif?> = if (error) {
+        throw Exception("Error")
+    } else {
+        flowOf(gifStub)
+    }
+
     /**
      * Creates a real Gif object, by parsing a stored json file containing a successful giffy api response
      */

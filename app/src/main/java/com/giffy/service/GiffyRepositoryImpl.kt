@@ -36,6 +36,11 @@ class GiffyRepositoryImpl @Inject constructor(
         return flowOf(searchResult)
     }
 
+    override suspend fun gifById(id: String): Flow<Gif?> {
+        val gif = giffyService.gifById(id).body()?.data
+        return flowOf(gif)
+    }
+
     private fun createService(): GiffyService {
         val baseUrl = "https://api.giphy.com/"
 
@@ -91,5 +96,10 @@ class GiffyRepositoryImpl @Inject constructor(
         suspend fun trendingGifs(
             @Query("limit") limit: Int = 50
         ): Response<GiffyResponse<List<Gif>>>
+
+        @GET("v1/gifs/{gifId}")
+        suspend fun gifById(
+            @Path("gifId") gifId: String
+        ): Response<GiffyResponse<Gif>>
     }
 }

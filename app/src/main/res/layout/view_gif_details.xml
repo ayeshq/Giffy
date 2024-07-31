@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.giffy.model.Gif" />
+
+        <variable
+            name="gif"
+            type="Gif" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gif_details_background"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/gifImageView">
+
+        <TextView
+            android:id="@+id/gifTitleText"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center_vertical"
+            android:text="@{gif.title}"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:textColor="@android:color/white"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ageBadgeText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Gif Title" />
+
+        <TextView
+            android:id="@+id/ageBadgeText"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            gifRating="@{gif.rating}"
+            visibleGone="@{gif.rating != null}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="PG 13" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

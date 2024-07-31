@@ -60,42 +60,12 @@
             android:scaleType="centerCrop"
             visibleGone="@{viewModel.state == State.Preview}" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <include
+            android:id="@+id/gifDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gif_details_background"
-            android:padding="16dp"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <TextView
-                android:id="@+id/gifTitleText"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:gravity="center_vertical"
-                android:textAppearance="@android:style/TextAppearance.Material.Title"
-                android:textColor="@android:color/white"
-                android:text="@{viewModel.randomGif.title}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ageBadgeText"
-                tools:text="Gif Title"/>
-
-            <TextView
-                android:id="@+id/ageBadgeText"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                visibleGone="@{viewModel.randomGif.rating != null}"
-                gifRating="@{viewModel.randomGif.rating}"
-                tools:text="PG 13"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            layout="@layout/view_gif_details"
+            gif="@{viewModel.randomGif}"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

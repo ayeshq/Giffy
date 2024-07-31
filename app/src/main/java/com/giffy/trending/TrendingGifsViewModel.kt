@@ -19,8 +19,12 @@ class TrendingGifsViewModel @Inject constructor(
     private val _trendingGifs = MutableLiveData<List<Gif>?>()
     val trendingGifs : LiveData<List<Gif>?> = _trendingGifs
 
-    private val _state = MutableLiveData(State.Loading)
+    private val _state = MutableLiveData<State>()
     val state : LiveData<State> = _state
+
+    init {
+        loadTrendingGifs()
+    }
 
     fun loadTrendingGifs() {
         val errorHandler = CoroutineExceptionHandler { _, throwable ->

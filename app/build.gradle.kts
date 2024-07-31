@@ -72,6 +72,8 @@ dependencies {
     val hiltVersion = "2.51.1"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    implementation("com.google.dagger:dagger-producers:$hiltVersion")
+    //com.google.dagger:dagger-producers
     // Hilt instrumented tests
     androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
     kaptAndroidTest("com.google.dagger:hilt-android-compiler:$hiltVersion")
@@ -90,7 +92,7 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.13.0")
 
     //lifecycle
-    val lifecycleVersion = "2.8.2"
+    val lifecycleVersion = "2.8.3"
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion")

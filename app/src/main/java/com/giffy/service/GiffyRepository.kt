@@ -10,4 +10,6 @@ interface GiffyRepository {
     suspend fun trendingGifs(): Flow<List<Gif>?>
 
     suspend fun searchGif(query: String): Flow<List<Gif>?>
+
+    suspend fun gifById(id: String): Flow<Gif?>
 }
